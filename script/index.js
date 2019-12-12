@@ -3,7 +3,7 @@ JS Fighter project continued on by OWA development
 OWA Employees
 1. Ashton Sisson
 2.Harry Nelson
-3.
+3.Daniel Williams
 4.
 9.Mykahl Luciano
 */
