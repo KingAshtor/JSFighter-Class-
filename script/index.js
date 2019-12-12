@@ -220,25 +220,34 @@ function hideControls() {
 }
 
 
-//showMenu
+//showMenu is used to show the main menu
 function showMenu() {
+  //Adds a start button used to start the game
   controlsBox.innerHTML = '<button type="button" name="start" onclick="gameStart()">Start</button>';
-  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharectorSelect()">Character Select</button>';
+  //Adds a character select button used to open a character select menu
+  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharacterSelect()">Character Select</button>';
+  //Adds a settings button used to open a setting menu
   controlsBox.innerHTML += '<button type="button" name="settings" onclick="showSettings()">Settings</button>';
 }
 
-function showCharectorSelect() {
+//showCharacterSelect is used to open a menu to be used for charector selection
+function showCharacterSelect() {
+  //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
 }
 
+//showSettings is used to open a settings menu to change aspects of the game
 function showSettings() {
+  //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
+  //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
 }
 
+//used to toggle logging
 function loggingToggle() {
-  logging = !logging;
-  outputBox.innerHTML = logging
+  logging = !logging; //inverts logging
+  outputBox.innerHTML = logging //logs true or false to console based on logging
 }
 /*
 MHW = 'delicious'
