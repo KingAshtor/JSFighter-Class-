@@ -1,3 +1,14 @@
+/*
+JS Fighter project continued on by OWA development
+OWA Employees
+1. Ashton Sisson
+2.
+3.
+4.
+5.
+*/
+
+//Sets default values for the fighter class
 const START_HP = 100;
 const START_SP = 20;
 const DEFAULT_ATK = 5;
@@ -10,12 +21,14 @@ const P0CHARA = 'crashr';
 const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
-let playerTurn = false;
-let logging = true;
+let playerTurn = false; //declares a value used for tracking player turn.
+let logging = true; //declares a value used to toggle logging
+
+//creates the players
 let Player0;
 let Player1;
 
-// declared variables for the boxes
+// declared variables for the html div boxes
 let gameBox;
 let headerBox;
 let graphicsBox;
@@ -23,6 +36,8 @@ let barsBox;
 let controlsBox;
 let outputBox;
 let sp;
+
+//Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
 
   constructor(name, charaName) {
@@ -43,36 +58,39 @@ class Fighter {
     console.log(this.name + ' attacked ' + target.name); //logs attack
 
     let damage = (Math.round(Math.random() + 1) * this.atk) //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
-    let reducedDamage = Math.round(damage / 6)
-    let dodge = Math.round(Math.random())
+    let reducedDamage = Math.round(damage / 6) //Creates reducedDamage which is used to deal less damage then normal for when they dodge
+    let dodge = Math.round(Math.random()) //Gets a random value to determine wether to dodge
+
     if (dodge) {
       outputBox.innerHTML += '<br>' + target.name + ' dodged ' + this.name + '\'s attack and was hit only hit for ' + reducedDamage + ' damage'; // outputs to the outputbox
-      damage = reducedDamage
-      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png';
-      document.getElementById(target.charaName).src = 'img/' + target.charaName + '_dodge.png';
+      damage = reducedDamage // sets damage to reduced damage when dodgeing
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
+      document.getElementById(target.charaName).src = 'img/' + target.charaName + '_dodge.png'; //sets the target to dodgeing graphics
       koCheck(target, damage); //runs ko check
     } else {
       outputBox.innerHTML += '<br>' + this.name + ' attacked ' + target.name + ' for ' + damage + ' damage!' // outputs to the outputbox
-      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png';
-      document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png';
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
+      document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png'; //sets the target to hit graphics
       koCheck(target, damage); //runs ko check
     }
   }
 
+  //used for a single attack
   single(target) {
     this.attack(target);
     endTurn();
   }
 
+  //used for a double attack
   double(target) {
     this.attack(target);
     this.attack(target);
     endTurn();
   }
 
-  //this logs that they recovered
+  //used to recover
   recover() {
-    console.log('Recovered!');
+    console.log('Recovered!'); //Logs the recovery in console
 
     //save old text
     let oldtext = outputBox.innerHTML
@@ -81,16 +99,15 @@ class Fighter {
       //minus 3 sp from total sp
       this.sp = this.sp - 3;
       //calculate recovery
-       let recovery = this.tek * 2;
-       //heal player
-       koCheck(this,-recovery);
-       outputBox.innerHTML = this.name + ' Recovered ' + recovery;
-       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png';
-    } else{
-      outputBox.innerHTML = "not enough SP"
-
+      let recovery = this.tek * 2;
+      //heal player
+      koCheck(this, -recovery);
+      outputBox.innerHTML = this.name + ' Recovered ' + recovery; //logs recovery to output box
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
+    } else {
+      outputBox.innerHTML = "not enough SP" //If the sp is to low it logs to the output box
     }
-    endTurn()
+    endTurn() // calls end turn
   }
 
 
@@ -98,10 +115,12 @@ class Fighter {
 
 }
 
-
+//function used to start up the game
 function startup() {
+  //creates two players using the fighter class
   Player0 = new Fighter(P0NAME, P0CHARA);
   Player1 = new Fighter(P1NAME, P1CHARA);
+
   //this makes a shortcut for 'document.getElementById'
   gameBox = document.getElementById('gameBox');
   headerBox = document.getElementById('headerBox');
@@ -109,11 +128,12 @@ function startup() {
   barsBox = document.getElementById('barsBox');
   controlsBox = document.getElementById('controlsBox');
   outputBox = document.getElementById('outputBox');
+
   //this shows the fighter images in the graphics box
   graphicsBox.innerHTML = '<img id ="' + Player0.charaName + '" src="img/' + Player0.charaName + '_idle.png" alt="' + Player0.name + '" class="fighterIMG">';
   graphicsBox.innerHTML += '<img id ="' + Player1.charaName + '" src="img/' + Player1.charaName + '_idle.png" alt="' + Player1.name + '" class="fighterIMG">';
 
-
+  //used to log players stats in the console
   console.log('My name is ' + Player0.name + ' and my ATK is ' + Player0.atk);
   console.log('My name is ' + Player1.name + ' and my ATK is ' + Player1.atk);
 
@@ -139,25 +159,29 @@ function showControls() {
 
 //checks the target's HP is less than or equal to 0, Then retuns true or false.
 function koCheck(target, amount) {
-  target.hp = target.hp - amount;
+  target.hp = target.hp - amount; // subtracts/heals damage
+
   if (target.hp <= 0) {
-    document.getElementById(target.charaName).src = 'img/' + target.charaName + '_ko.png';
-    hideControls();
-    return true;
+    document.getElementById(target.charaName).src = 'img/' + target.charaName + '_ko.png'; //Sets the charectors graphics to ko if hp is zero or less
+    hideControls(); //Calls hide controls to end the game if they are KOed
+    return true; //returns KO check as true
   } else {
-    return false;
+    return false; //returns KO check as false
   }
 }
 
 //This function takes all the info to build an HP or SP bar, and ensure it is not greater than 100 or less than 0
 function updateBar(player, hpsp, min, max) {
-  let calculated = ((min / max) * 100);
+  let calculated = ((min / max) * 100); //sets calculated % for the health bar as min/max then turns to a percent
+
+  //If calulated is greater than or less then the calculated then it sets it too 100% or 0% accordingly
   if (calculated > 100) {
     calculated = 100;
   } else if (calculated < 0) {
     calculated = 0;
   }
 
+  //Displays respective bars
   return '<div class="' + hpsp + 'Bar"><div style="width:' + calculated + '%;" id="p0' + hpsp + 'Fill" class="' + hpsp + 'Fill">' + min + '</div></div>';
 
 }
@@ -170,25 +194,30 @@ function updateBars() {
   barsBox.innerHTML += updateBar(Player1, 'sp', Player1.sp, START_SP);
 }
 
-// EndTurn code
+// Creates endTurn used to either end the turn or pass it onto the next player
 function endTurn() {
-  playerTurn = !playerTurn
-  if (koCheck(Player0, 0) || koCheck(Player1, 0)) {
-    hideControls();
-    updateBars();
-  } else {
-    showControls()
+  playerTurn = !playerTurn //inverts value for playerTurn
 
-    updateBars();
+  //runs koCheck to see if either player is KOed
+  if (koCheck(Player0, 0) || koCheck(Player1, 0)) {
+    hideControls(); //calls hideControls to end the game
+    updateBars(); //calls updateBars in order to update the bars
+  } else {
+    showControls() //shows controls for next players turn
+    updateBars(); //calls updateBars in order to update the bars
   }
 }
 
+//creates function for hiding controls to end the game by showing a reset button to restart the game
 function hideControls() {
-
+  //overwrites the contols with a reset button to restart the game
   controlsBox.innerHTML = '<button type="button" value="Refresh Page" name="refresh" onClick="window.location.reload();">Refresh </button>';
 }
 
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
+
+Sometimes you Git the Hub...
+Sometimes the Hub Git you!!!
 */
