@@ -10,7 +10,7 @@ OWA Employees
 
 //Sets default values for the fighter class
 const START_HP = 100;
-const START_SP = 20;
+const START_SP = 50;
 const DEFAULT_ATK = 5;
 const DEFAULT_DEF = 5;
 const DEFAULT_TEK = 5;
@@ -22,7 +22,7 @@ const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
 let playerTurn = false; //declares a value used for tracking player turn.
-let logging //declares a value used to toggle logging
+let logging = true; //declares a value used to toggle logging
 
 //creates the players
 let Player0;
@@ -117,6 +117,10 @@ class Fighter {
 
 //function used to start up the game
 function startup() {
+  //creates two players using the fighter class
+  Player0 = new Fighter(P0NAME, P0CHARA);
+  Player1 = new Fighter(P1NAME, P1CHARA);
+
   //this makes a shortcut for 'document.getElementById'
   gameBox = document.getElementById('gameBox');
   headerBox = document.getElementById('headerBox');
@@ -125,16 +129,6 @@ function startup() {
   controlsBox = document.getElementById('controlsBox');
   outputBox = document.getElementById('outputBox');
 
-  showMenu()
-
-  logging = false
-}
-
-function gameStart() {
-  //creates two players using the fighter class
-  Player0 = new Fighter(P0NAME, P0CHARA);
-  Player1 = new Fighter(P1NAME, P1CHARA);
-
   //this shows the fighter images in the graphics box
   graphicsBox.innerHTML = '<img id ="' + Player0.charaName + '" src="img/' + Player0.charaName + '_idle.png" alt="' + Player0.name + '" class="fighterIMG">';
   graphicsBox.innerHTML += '<img id ="' + Player1.charaName + '" src="img/' + Player1.charaName + '_idle.png" alt="' + Player1.name + '" class="fighterIMG">';
@@ -142,6 +136,7 @@ function gameStart() {
   //used to log players stats in the console
   console.log('My name is ' + Player0.name + ' and my ATK is ' + Player0.atk);
   console.log('My name is ' + Player1.name + ' and my ATK is ' + Player1.atk);
+
 
   showControls(); //runs the showControls() function
   updateBars(); //runs the updateBars() function
@@ -152,13 +147,13 @@ function showControls() {
   if (playerTurn) {
     //show buttons for player1 and overwrites player0's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player1.single(Player0)">Single Attack!</button>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!(5-SP)</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover!(10-SP)</button><br>';
   } else {
     //show buttons for player0 and overwrites player1's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player0.single(Player1)">Single Attack!</button>';
     controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover!(10-SP</button><br>';
   }
 }
 
@@ -208,7 +203,7 @@ function endTurn() {
     hideControls(); //calls hideControls to end the game
     updateBars(); //calls updateBars in order to update the bars
   } else {
-    showControls() //shows controls for next players turn
+    showControls(); //shows controls for next players turn
     updateBars(); //calls updateBars in order to update the bars
   }
 }
@@ -219,27 +214,6 @@ function hideControls() {
   controlsBox.innerHTML = '<button type="button" value="Refresh Page" name="refresh" onClick="window.location.reload();">Refresh </button>';
 }
 
-
-//showMenu
-function showMenu() {
-  controlsBox.innerHTML = '<button type="button" name="start" onclick="gameStart()">Start</button>';
-  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharectorSelect()">Character Select</button>';
-  controlsBox.innerHTML += '<button type="button" name="settings" onclick="showSettings()">Settings</button>';
-}
-
-function showCharectorSelect() {
-  controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
-}
-
-function showSettings() {
-  controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
-  controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
-}
-
-function loggingToggle() {
-  logging = !logging;
-  outputBox.innerHTML = logging
-}
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
