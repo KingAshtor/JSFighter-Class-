@@ -2,7 +2,7 @@
 JS Fighter project continued on by OWA development
 OWA Employees
 1. Ashton Sisson
-2.
+2.Harry Nelson
 3.
 4.
 9.Mykahl Luciano
@@ -102,7 +102,7 @@ class Fighter {
       let recovery = this.tek * 2;
       //heal player
       koCheck(this, -recovery);
-      outputBox.innerHTML = this.name + ' Recovered ' + recovery; //logs recovery to output box
+      outputBox.innerHTML += '<br>' + this.name + ' Recovered ' + recovery; //logs recovery to output box
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     } else {
       outputBox.innerHTML = "not enough SP" //If the sp is to low it logs to the output box
