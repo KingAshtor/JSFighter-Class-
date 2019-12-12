@@ -93,7 +93,7 @@ class Fighter {
     console.log('Recovered!'); //Logs the recovery in console
 
     //save old text
-    let oldtext = outputBox.innerHTML
+    let oldtext = outputBox.innerHTML;
     //if they have enough Sp
     if (this.sp >= 3) {
       //minus 3 sp from total sp
@@ -147,13 +147,13 @@ function showControls() {
   if (playerTurn) {
     //show buttons for player1 and overwrites player0's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player1.single(Player0)">Single Attack!</button>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>'
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>'
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>';
   } else {
     //show buttons for player0 and overwrites player1's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player0.single(Player1)">Single Attack!</button>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>'
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>'
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>';
   }
 }
 
@@ -196,7 +196,7 @@ function updateBars() {
 
 // Creates endTurn used to either end the turn or pass it onto the next player
 function endTurn() {
-  playerTurn = !playerTurn //inverts value for playerTurn
+  playerTurn = !playerTurn; //inverts value for playerTurn
 
   //runs koCheck to see if either player is KOed
   if (koCheck(Player0, 0) || koCheck(Player1, 0)) {
