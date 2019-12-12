@@ -2,7 +2,7 @@
 JS Fighter project continued on by OWA development
 OWA Employees
 1. Ashton Sisson
-2.Harry Nelson
+2. Harry Nelson
 3.
 4.
 5.
@@ -22,7 +22,11 @@ const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
 let playerTurn = false; //declares a value used for tracking player turn.
-let logging = true; //declares a value used to toggle logging
+let logging = false;
+
+// var op = '+='
+// //this is a needs tobe a value intsead of an operator
+
 
 //creates the players
 let Player0;
@@ -36,6 +40,8 @@ let barsBox;
 let controlsBox;
 let outputBox;
 let sp;
+let log;
+
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -56,19 +62,27 @@ class Fighter {
   //this logs who attacked who
   attack(target) {
     console.log(this.name + ' attacked ' + target.name); //logs attack
+    //save old text
+    let oldtext = outputBox.innerHTML
+
+    if (logging) {
+      log =  '<br>' + oldtext
+    } else {
+      log = "";
+    }
 
     let damage = (Math.round(Math.random() + 1) * this.atk) //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
     let reducedDamage = Math.round(damage / 6) //Creates reducedDamage which is used to deal less damage then normal for when they dodge
     let dodge = Math.round(Math.random()) //Gets a random value to determine wether to dodge
 
     if (dodge) {
-      outputBox.innerHTML += '<br>' + target.name + ' dodged ' + this.name + '\'s attack and was hit only hit for ' + reducedDamage + ' damage'; // outputs to the outputbox
+      outputBox.innerHTML = target.name + ' dodged ' + this.name + '\'s attack and was hit only hit for ' + reducedDamage + ' damage!' + log; // outputs to the outputbox with everything else
       damage = reducedDamage // sets damage to reduced damage when dodgeing
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_dodge.png'; //sets the target to dodgeing graphics
       koCheck(target, damage); //runs ko check
     } else {
-      outputBox.innerHTML += '<br>' + this.name + ' attacked ' + target.name + ' for ' + damage + ' damage!' // outputs to the outputbox
+      outputBox.innerHTML = this.name + ' attacked ' + target.name + ' for ' + damage + ' damage!' + log; // outputs to the outputbox with everything else
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png'; //sets the target to hit graphics
       koCheck(target, damage); //runs ko check
@@ -91,9 +105,15 @@ class Fighter {
   //used to recover
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
-
     //save old text
     let oldtext = outputBox.innerHTML
+
+    if (logging) {
+      log =  '<br>' + oldtext
+    } else {
+      log = "";
+    }
+
     //if they have enough Sp
     if (this.sp >= 3) {
       //minus 3 sp from total sp
@@ -102,10 +122,12 @@ class Fighter {
       let recovery = this.tek * 2;
       //heal player
       koCheck(this, -recovery);
-      outputBox.innerHTML += '<br>' + this.name + ' Recovered ' + recovery; //logs recovery to output box
-      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
+      outputBox.innerHTML = this.name + ' Recovered ' + recovery + log; //logs recovery to output box with everything else
+
     } else {
-      outputBox.innerHTML = "not enough SP" //If the sp is to low it logs to the output box
+      outputBox.innerHTML = 'Not enough SP!' + log; //If the sp is to low it logs to the output box with everything else
+
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     }
     endTurn() // calls end turn
   }
