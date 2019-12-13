@@ -95,6 +95,20 @@ class Fighter {
   double(target) {
     this.attack(target);
     this.attack(target);
+    if (this.sp >= 3) {
+      //minus 3 sp from total sp
+      this.sp = this.sp - 3;
+      //calculate double attack.
+      let doubleatk = this.tek * 2;
+      //Hurts player
+      koCheck(this, doubleatk);
+      outputBox.innerHTML = this.name + doubleatk + log; //logs doubleatk to output box with everything else
+
+    } else {
+      outputBox.innerHTML = 'Not enough SP!' + log; //If the sp is to low it logs to the output box with everything else
+
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets player casting the double attack to attack graphics
+    }
     endTurn();
   }
 
@@ -303,7 +317,9 @@ function randomQuote() { //assigned function random
       'You\'ve been blinded by meglovania! -Ashton Sisson',
       'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
       'Get smacked -Harry Nelson',
-      'free range!?!?!? - Mycal',
+      'free range!?!?!? - Mykahl Luciano',
+      'I refuse! - Mykahl Luciano',
+      'So many div tags!!!!!! - Ashton Sisson'
     ];
 
   //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
