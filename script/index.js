@@ -72,13 +72,13 @@ class Fighter {
     let dodge = Math.round(Math.random()) //Gets a random value to determine wether to dodge
 
     if (dodge) {
-      outputBox.innerHTML = target.name + ' dodged ' + this.name + '\'s attack and was hit only hit for ' + reducedDamage + ' damage!' + log; // outputs to the outputbox with everything else
+      outputBox.innerHTML += '<br>' + target.name + ' dodged ' + this.name + '\'s attack and was only hit for <span class="damageColor">' + reducedDamage + ' damage</span>'; // outputs to the outputbox
       damage = reducedDamage // sets damage to reduced damage when dodgeing
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_dodge.png'; //sets the target to dodgeing graphics
       koCheck(target, damage); //runs ko check
     } else {
-      outputBox.innerHTML = this.name + ' attacked ' + target.name + ' for ' + damage + ' damage!' + log; // outputs to the outputbox with everything else
+      outputBox.innerHTML += '<br>' + this.name + ' attacked ' + target.name + ' for  <span class="damageColor">' + damage + ' damage! </span>' // outputs to the outputbox
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png'; //sets the target to hit graphics
       koCheck(target, damage); //runs ko check
@@ -118,8 +118,8 @@ class Fighter {
       let recovery = this.tek * 2;
       //heal player
       koCheck(this, -recovery);
-      outputBox.innerHTML = this.name + ' Recovered ' + recovery + log; //logs recovery to output box with everything else
-
+      outputBox.innerHTML += '<br>' + this.name + '<span class="recoverColor"> Recovered ' + recovery + '</span>'; //logs recovery to output box
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     } else {
       outputBox.innerHTML = 'Not enough SP!' + log; //If the sp is to low it logs to the output box with everything else
 
