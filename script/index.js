@@ -4,7 +4,7 @@ OWA Employees
 1. Ashton Sisson
 2.Harry Nelson
 3.Daniel Williams
-4.
+4.Nathan Cunningham
 9.Mykahl Luciano
 */
 
@@ -36,6 +36,8 @@ let barsBox;
 let controlsBox;
 let outputBox;
 let sp;
+let log;
+
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -56,6 +58,14 @@ class Fighter {
   //this logs who attacked who
   attack(target) {
     console.log(this.name + ' attacked ' + target.name); //logs attack
+    //save old text
+    let oldtext = outputBox.innerHTML
+
+    if (logging) {
+      log =  '<br>' + oldtext
+    } else {
+      log = "";
+    }
 
     let damage = (Math.round(Math.random() + 1) * this.atk) //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
     let reducedDamage = Math.round(damage / 6) //Creates reducedDamage which is used to deal less damage then normal for when they dodge
@@ -91,9 +101,15 @@ class Fighter {
   //used to recover
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
-
     //save old text
-    let oldtext = outputBox.innerHTML;
+    let oldtext = outputBox.innerHTML
+
+    if (logging) {
+      log =  '<br>' + oldtext
+    } else {
+      log = "";
+    }
+
     //if they have enough Sp
     if (this.sp >= 3) {
       //minus 3 sp from total sp
@@ -105,7 +121,9 @@ class Fighter {
       outputBox.innerHTML += '<br>' + this.name + '<span class="recoverColor"> Recovered ' + recovery + '</span>'; //logs recovery to output box
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     } else {
-      outputBox.innerHTML = "not enough SP" //If the sp is to low it logs to the output box
+      outputBox.innerHTML = 'Not enough SP!' + log; //If the sp is to low it logs to the output box with everything else
+
+      document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     }
     endTurn() // calls end turn
   }
@@ -131,6 +149,10 @@ function startup() {
 }
 
 function gameStart() {
+
+  //blanks outputBox before game starts
+  outputBox.innerHTML = 'FIGHT!!!'
+
   //creates two players using the fighter class
   Player0 = new Fighter(P0NAME, P0CHARA);
   Player1 = new Fighter(P1NAME, P1CHARA);
@@ -220,25 +242,71 @@ function hideControls() {
 }
 
 
-//showMenu
+//showMenu is used to show the main menu
 function showMenu() {
+  //Adds a start button used to start the game
   controlsBox.innerHTML = '<button type="button" name="start" onclick="gameStart()">Start</button>';
-  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharectorSelect()">Character Select</button>';
+  //Adds a character select button used to open a character select menu
+  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharacterSelect()">Character Select</button>';
+  //Adds a settings button used to open a setting menu
   controlsBox.innerHTML += '<button type="button" name="settings" onclick="showSettings()">Settings</button>';
+  randomQuote()
 }
 
-function showCharectorSelect() {
+//showCharacterSelect is used to open a menu to be used for charector selection
+function showCharacterSelect() {
+  //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
 }
 
+//showSettings is used to open a settings menu to change aspects of the game
 function showSettings() {
+  //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
+  //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
 }
 
+//used to toggle logging
 function loggingToggle() {
-  logging = !logging;
-  outputBox.innerHTML = logging
+  logging = !logging; //inverts logging
+  outputBox.innerHTML = logging //logs true or false to console based on logging
+}
+function randomQuote() { //assigned function random
+
+  let rQuoteStoreage = //Used to assign array that stores random quotes
+    [
+      'I\'m lost -Daniel Williams',
+      'I\'m sorry Nate, but Harry is not here for me to assault today -Ashton Sisson',
+      'Use slack -Mr. Smith',
+      'Life Tip: Dolphins are just smooth sharks',
+      'Outcome hazy, try again later',
+      'Beep Beep Lettuce',
+      'Fun Fact:ℸ ̣ ᒷᔑᒲ ʖ is the best company',
+      'Sir can you not assault the image person\'s chair- Nathan Cunningham',
+      'SUB TO NATE PLAYS GAMES!!! https://www.youtube.com/channel/UCHSDJZkW8WWwME36ZMvfuFg',
+      'Oh no this can\'t be good -Daniel Williams',
+      'Its a hoodie hoodie - Mykal Luciano',
+      'Beans',
+      'NO - Daniel Williams',
+      'I will never be as smart as function -Daniel Williams',
+      'He\'s literally just writing stuff down while im saying it -Daniel Williams',
+      'My whole life is a lie -Daniel Williams',
+      'Im an airplaine! PRPRPRPRPRPPRRPPRPRPRPRPRPRPPRPRPRRRPPPP -Ashton Sisson',
+      'I\'ve oversanitised! -Ashton Sisson',
+      'Harry can you play the SpongeBob thing? -Ashton Sisson',
+      'You\'ve been blinded by meglovania! -Ashton Sisson',
+      'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
+      'Get smacked -Harry Nelson',
+      'free range!?!?!? - Mycal',
+    ];
+
+  //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
+  let rQuote =
+    rQuoteStoreage[Math.floor(Math.random() * rQuoteStoreage.length)];
+
+  //outputs varible rQuote (the Random Quote) into the html under the tag output
+    outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
 /*
 MHW = 'delicious'
