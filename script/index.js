@@ -75,6 +75,14 @@ class Fighter {
     }
   }
 
+charge(target) {
+  console.log('Working Properly')
+  let damage = this.atk * 2
+  this.hp = this.hp - 10
+  this.atk = damage
+  outputBox.innerHTML += this.name + ' has started to charge!'
+}
+
   //used for a single attack
   single(target) {
     this.attack(target);
@@ -85,6 +93,11 @@ class Fighter {
   double(target) {
     this.attack(target);
     this.attack(target);
+    endTurn();
+  }
+
+  special(target) {
+    this.charge(target);
     endTurn();
   }
 
@@ -107,7 +120,7 @@ class Fighter {
     } else {
       outputBox.innerHTML = "not enough SP" //If the sp is to low it logs to the output box
     }
-    endTurn() // calls end turn
+    endTurn(); // calls end turn
   }
 
 
@@ -154,11 +167,13 @@ function showControls() {
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player1.single(Player0)">Single Attack!</button>';
     controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>';
     controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="charge" onclick="Player1.special(Player0)">Charge!</button><br>';
   } else {
     //show buttons for player0 and overwrites player1's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player0.single(Player1)">Single Attack!</button>';
     controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>';
     controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="charge" onclick="Player0.special(Player1)">Charge!</button><br>';
   }
 }
 
