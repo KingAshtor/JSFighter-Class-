@@ -2,10 +2,10 @@
 JS Fighter project continued on by OWA development
 OWA Employees
 1. Ashton Sisson
-2. Harry Nelson
-3.
-4.
-5.
+2.Harry Nelson
+3.Daniel Williams
+4.Nathan Cunningham
+9.Mykahl Luciano
 */
 
 //Sets default values for the fighter class
@@ -22,11 +22,7 @@ const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
 let playerTurn = false; //declares a value used for tracking player turn.
-let logging = false;
-
-// var op = '+='
-// //this is a needs tobe a value intsead of an operator
-
+let logging //declares a value used to toggle logging
 
 //creates the players
 let Player0;
@@ -139,10 +135,6 @@ class Fighter {
 
 //function used to start up the game
 function startup() {
-  //creates two players using the fighter class
-  Player0 = new Fighter(P0NAME, P0CHARA);
-  Player1 = new Fighter(P1NAME, P1CHARA);
-
   //this makes a shortcut for 'document.getElementById'
   gameBox = document.getElementById('gameBox');
   headerBox = document.getElementById('headerBox');
@@ -151,6 +143,20 @@ function startup() {
   controlsBox = document.getElementById('controlsBox');
   outputBox = document.getElementById('outputBox');
 
+  showMenu()
+
+  logging = false
+}
+
+function gameStart() {
+
+  //blanks outputBox before game starts
+  outputBox.innerHTML = 'FIGHT!!!'
+
+  //creates two players using the fighter class
+  Player0 = new Fighter(P0NAME, P0CHARA);
+  Player1 = new Fighter(P1NAME, P1CHARA);
+
   //this shows the fighter images in the graphics box
   graphicsBox.innerHTML = '<img id ="' + Player0.charaName + '" src="img/' + Player0.charaName + '_idle.png" alt="' + Player0.name + '" class="fighterIMG">';
   graphicsBox.innerHTML += '<img id ="' + Player1.charaName + '" src="img/' + Player1.charaName + '_idle.png" alt="' + Player1.name + '" class="fighterIMG">';
@@ -158,7 +164,6 @@ function startup() {
   //used to log players stats in the console
   console.log('My name is ' + Player0.name + ' and my ATK is ' + Player0.atk);
   console.log('My name is ' + Player1.name + ' and my ATK is ' + Player1.atk);
-
 
   showControls(); //runs the showControls() function
   updateBars(); //runs the updateBars() function
@@ -169,13 +174,13 @@ function showControls() {
   if (playerTurn) {
     //show buttons for player1 and overwrites player0's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player1.single(Player0)">Single Attack!</button>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>'
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>'
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.double(Player0)">Double Attack!</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player1.recover(Player0)">Recover</button><br>';
   } else {
     //show buttons for player0 and overwrites player1's controls
     controlsBox.innerHTML = '<button type="button" name="attack" onclick="Player0.single(Player1)">Single Attack!</button>';
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>'
-    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>'
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.double(Player1)">Double Attack!</button><br>';
+    controlsBox.innerHTML += '<br><button type="button" name="attack" onclick="Player0.recover(Player1)">Recover</button><br>';
   }
 }
 
@@ -218,7 +223,7 @@ function updateBars() {
 
 // Creates endTurn used to either end the turn or pass it onto the next player
 function endTurn() {
-  playerTurn = !playerTurn //inverts value for playerTurn
+  playerTurn = !playerTurn; //inverts value for playerTurn
 
   //runs koCheck to see if either player is KOed
   if (koCheck(Player0, 0) || koCheck(Player1, 0)) {
@@ -236,6 +241,73 @@ function hideControls() {
   controlsBox.innerHTML = '<button type="button" value="Refresh Page" name="refresh" onClick="window.location.reload();">Refresh </button>';
 }
 
+
+//showMenu is used to show the main menu
+function showMenu() {
+  //Adds a start button used to start the game
+  controlsBox.innerHTML = '<button type="button" name="start" onclick="gameStart()">Start</button>';
+  //Adds a character select button used to open a character select menu
+  controlsBox.innerHTML += '<button type="button" name="select" onclick="showCharacterSelect()">Character Select</button>';
+  //Adds a settings button used to open a setting menu
+  controlsBox.innerHTML += '<button type="button" name="settings" onclick="showSettings()">Settings</button>';
+  randomQuote()
+}
+
+//showCharacterSelect is used to open a menu to be used for charector selection
+function showCharacterSelect() {
+  //adds a button to return to main menu
+  controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
+}
+
+//showSettings is used to open a settings menu to change aspects of the game
+function showSettings() {
+  //adds a button to return to main menu
+  controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
+  //adds a button to toggle logging
+  controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
+}
+
+//used to toggle logging
+function loggingToggle() {
+  logging = !logging; //inverts logging
+  outputBox.innerHTML = logging //logs true or false to console based on logging
+}
+function randomQuote() { //assigned function random
+
+  let rQuoteStoreage = //Used to assign array that stores random quotes
+    [
+      'I\'m lost -Daniel Williams',
+      'I\'m sorry Nate, but Harry is not here for me to assault today -Ashton Sisson',
+      'Use slack -Mr. Smith',
+      'Life Tip: Dolphins are just smooth sharks',
+      'Outcome hazy, try again later',
+      'Beep Beep Lettuce',
+      'Fun Fact:ℸ ̣ ᒷᔑᒲ ʖ is the best company',
+      'Sir can you not assault the image person\'s chair- Nathan Cunningham',
+      'SUB TO NATE PLAYS GAMES!!! https://www.youtube.com/channel/UCHSDJZkW8WWwME36ZMvfuFg',
+      'Oh no this can\'t be good -Daniel Williams',
+      'Its a hoodie hoodie - Mykal Luciano',
+      'Beans',
+      'NO - Daniel Williams',
+      'I will never be as smart as function -Daniel Williams',
+      'He\'s literally just writing stuff down while im saying it -Daniel Williams',
+      'My whole life is a lie -Daniel Williams',
+      'Im an airplaine! PRPRPRPRPRPPRRPPRPRPRPRPRPRPPRPRPRRRPPPP -Ashton Sisson',
+      'I\'ve oversanitised! -Ashton Sisson',
+      'Harry can you play the SpongeBob thing? -Ashton Sisson',
+      'You\'ve been blinded by meglovania! -Ashton Sisson',
+      'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
+      'Get smacked -Harry Nelson',
+      'free range!?!?!? - Mycal',
+    ];
+
+  //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
+  let rQuote =
+    rQuoteStoreage[Math.floor(Math.random() * rQuoteStoreage.length)];
+
+  //outputs varible rQuote (the Random Quote) into the html under the tag output
+    outputBox.innerHTML = rQuote //logs random quote as spalsh text
+}
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
