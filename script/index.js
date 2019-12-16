@@ -37,6 +37,8 @@ let controlsBox;
 let outputBox;
 let sp;
 let log;
+let jsfGithub;
+let jsfDatabaseGithub;
 
 
 //Creates a class called Fighter to generate fighters easily and using less code
@@ -265,6 +267,8 @@ function showSettings() {
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
+  outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
+  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub +'">Visit jsfDatabaseGithub</a>'
 }
 
 //used to toggle logging
@@ -298,7 +302,7 @@ function randomQuote() { //assigned function random
       'You\'ve been blinded by meglovania! -Ashton Sisson',
       'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
       'Get smacked -Harry Nelson',
-      'free range!?!?!? - Mycal',
+      'free range!?!?!? - Mykahl Luciano',
     ];
 
   //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
