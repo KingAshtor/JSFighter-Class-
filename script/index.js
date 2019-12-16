@@ -37,8 +37,8 @@ let controlsBox;
 let outputBox;
 let sp;
 let log;
-let oldtext
-
+let jsfGithub;
+let jsfDatabaseGithub;;
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -281,6 +281,8 @@ function showSettings() {
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
+  outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
+  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub +'">Visit jsfDatabaseGithub</a>'
 }
 
 //used to toggle logging
