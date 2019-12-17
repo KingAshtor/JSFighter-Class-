@@ -21,9 +21,6 @@ const P0CHARA = 'crashr';
 const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
-let playerTurn = false; //declares a value used for tracking player turn.
-let logging //declares a value used to toggle logging
-
 //creates the players
 let Player0;
 let Player1;
@@ -35,11 +32,19 @@ let graphicsBox;
 let barsBox;
 let controlsBox;
 let outputBox;
+
 let sp;
 let log;
+let oldtext;
+let playerTurn = false; //declares a value used for tracking player turn.
+let logging; //declares a value used to toggle logging
+let graphics; //declares a value used to toggle graphics
+let sound; //declares a value used to toggle sound
+
+
+//used to link the urls we get from the JSON
 let jsfGithub;
 let jsfDatabaseGithub;
-let oldtext;
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -64,7 +69,7 @@ class Fighter {
     oldtext = outputBox.innerHTML
 
     if (logging) {
-      log =  '<br>' + oldtext
+      log = '<br>' + oldtext
     } else {
       log = "";
     }
@@ -87,13 +92,13 @@ class Fighter {
     }
   }
 
-charge(target) {
-  console.log('Working Properly')
-  let damage = this.atk * 2
-  this.hp = this.hp - 10
-  this.atk = damage
-  outputBox.innerHTML += this.name + ' has started to charge!'
-}
+  charge(target) {
+    console.log('Working Properly')
+    let damage = this.atk * 2
+    this.hp = this.hp - 10
+    this.atk = damage
+    outputBox.innerHTML += this.name + ' has started to charge!'
+  }
 
   //used for a single attack
   single(target) {
@@ -120,7 +125,7 @@ charge(target) {
     oldtext = outputBox.innerHTML
 
     if (logging) {
-      log =  '<br>' + oldtext
+      log = '<br>' + oldtext
     } else {
       log = "";
     }
@@ -161,6 +166,8 @@ function startup() {
   showMenu()
 
   logging = false
+  sound = 'off'
+  graphics = 'classic'
 }
 
 function gameStart() {
@@ -276,21 +283,44 @@ function showCharacterSelect() {
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
 }
 
+
+function updateSettings() {
+  outputBox.innerHTML = 'Logging ' + logging + ' | Graphics ' + graphics + ' | Sound ' + sound + ' |'
+  outputBox.innerHTML += '<br><a href="' + jsfGithub + '">Visit jsfGithub</a>'
+  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub + '">Visit jsfDatabaseGithub</a>'
+}
+
 //showSettings is used to open a settings menu to change aspects of the game
 function showSettings() {
   //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
-  outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
-  outputBox.innerHTML += '<br><a href="'+jsfDatabaseGithub+'">Visit jsfDatabaseGithub</a>'
+  //adds a button to change graphics
+  controlsBox.innerHTML += '<button type="button" name="graphics" onclick="graphicsToggle()">Graphics</button>';
+  //adds a button to toggle logging
+  controlsBox.innerHTML += '<button type="button" name="sound" onclick="soundToggle()">Sound</button>';
+  //calls updateSettings
+  updateSettings()
 }
 
 //used to toggle logging
 function loggingToggle() {
   logging = !logging; //inverts logging
-  outputBox.innerHTML = logging //logs true or false to console based on logging
+  updateSettings(); //updates settings
 }
+//used to toggle graphics
+function graphicsToggle() {
+  graphics = 'WIP'
+  updateSettings(); //updates settings
+}
+//used to toggle sound
+function soundToggle() {
+  sound = 'WIP'
+  updateSettings(); //updates settings
+}
+
+
 function randomQuote() { //assigned function random
 
   let rQuoteStoreage = //Used to assign array that stores random quotes
@@ -329,7 +359,7 @@ function randomQuote() { //assigned function random
     rQuoteStoreage[Math.floor(Math.random() * rQuoteStoreage.length)];
 
   //outputs varible rQuote (the Random Quote) into the html under the tag output
-    outputBox.innerHTML = rQuote //logs random quote as spalsh text
+  outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
 
 let xmlhttp = new XMLHttpRequest();
