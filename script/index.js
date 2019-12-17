@@ -282,7 +282,7 @@ function showSettings() {
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
   outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
-  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub +'">Visit jsfDatabaseGithub</a>'
+  outputBox.innerHTML += '<br><a href="'+jsfDatabaseGithub+'">Visit jsfDatabaseGithub</a>'
 }
 
 //used to toggle logging
@@ -330,6 +330,16 @@ function randomQuote() { //assigned function random
   //outputs varible rQuote (the Random Quote) into the html under the tag output
     outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
+
+let xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    let myObj = JSON.parse(this.responseText);
+    jsfGithub = myObj.name;
+  }
+};
+xmlhttp.open("GET", "JSFighter-TeamB", true);
+xmlhttp.send();
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
