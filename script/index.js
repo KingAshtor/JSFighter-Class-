@@ -317,6 +317,10 @@ function randomQuote() { //assigned function random
       'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
       'Get smacked -Harry Nelson',
       'free range!?!?!? - Mykahl Luciano',
+      'GitHub is dynamically screwing us over! -Ashton Sisson',
+      '',
+      '',
+      '',
     ];
 
   //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
