@@ -92,7 +92,7 @@ charge(target) {
   let damage = this.atk * 2
   this.hp = this.hp - 10
   this.atk = damage
-  outputBox.innerHTML += this.name + ' has started to charge!'
+  outputBox.innerHTML = this.name + ' has started to charge!' + log;
 }
 
   //used for a single attack
