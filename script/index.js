@@ -38,7 +38,8 @@ let outputBox;
 let sp;
 let log;
 let jsfGithub;
-let jsfDatabaseGithub;;
+let jsfDatabaseGithub;
+let oldtext;
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
