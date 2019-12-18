@@ -349,7 +349,7 @@ function randomQuote() { //assigned function random
       'Get smacked -Harry Nelson',
       'free range!?!?!? - Mykahl Luciano',
       'GitHub is dynamically screwing us over! -Ashton Sisson',
-      '',
+      'Sicky Nar-Nar - Harry Nelson',
       '',
       '',
     ];
