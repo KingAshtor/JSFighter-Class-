@@ -159,6 +159,8 @@ function startup() {
   outputBox = document.getElementById('outputBox');
 
   showMenu();
+  link1();
+  link2();
 
   logging = false
 }
@@ -332,15 +334,33 @@ function randomQuote() { //assigned function random
     outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
 
-let xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    let myObj = JSON.parse(this.responseText);
-    jsfGithub = myObj.name;
-  }
-};
-xmlhttp.open("GET", "JSFighter-TeamB", true);
-xmlhttp.send();
+function link1() {
+const Http = new XMLHttpRequest();
+const url='https://api.github.com/repos/KingAshtor/JSFighter-TeamB';
+Http.open('GET', url);
+Http.send();
+
+Http.onreadystatechange = (e) => {
+  let list = JSON.parse(Http.responseText);
+  jsfGithub = (list.html_url)
+  console.log(list.html_url)
+}
+}
+
+function link2() {
+const Http = new XMLHttpRequest();
+const url='https://api.github.com/repos/andre2021537/JSFDB';
+Http.open('GET', url);
+Http.send();
+
+Http.onreadystatechange = (e) => {
+  let list = JSON.parse(Http.responseText);
+  jsfDatabaseGithub = (list.html_url)
+  console.log(list.html_url)
+}
+}
+
+
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
