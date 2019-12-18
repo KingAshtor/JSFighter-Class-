@@ -105,8 +105,14 @@ charge(target) {
   double(target) {
     this.attack(target);
     this.attack(target);
+    // Check to see if this player has enough SP to use the ability
+    if (this.sp >= 5) {
+        // Consume SP for using the ability
+        this.sp = this.sp - 5;
+        // Log action details to 'outputBox'
     endTurn();
   }
+}
 
   special(target) {
     this.charge(target);
@@ -252,6 +258,10 @@ function endTurn() {
     showControls(); //shows controls for next players turn
     updateBars(); //calls updateBars in order to update the bars
   }
+  if (Player0.sp < 10)
+      Player0.sp += !playerTurn
+  if (Player1.sp < 10)
+      Player1.sp += playerTurn
 }
 
 //creates function for hiding controls to end the game by showing a reset button to restart the game
