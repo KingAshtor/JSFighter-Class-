@@ -285,7 +285,7 @@ function showCharacterSelect() {
 
 
 function updateSettings() {
-  outputBox.innerHTML = 'Logging ' + logging + ' | Graphics ' + graphics + ' | Sound ' + sound + ' |'
+  outputBox.innerHTML = '<div class="settingMenu">Logging ' + logging + ' | Graphics ' + graphics + ' | Sound ' + sound + ' |</div>'
   outputBox.innerHTML += '<br><a href="' + jsfGithub + '">Visit jsfGithub</a>'
   outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub + '">Visit jsfDatabaseGithub</a>'
 }
