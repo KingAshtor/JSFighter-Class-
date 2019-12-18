@@ -37,7 +37,8 @@ let controlsBox;
 let outputBox;
 let sp;
 let log;
-
+let jsfGithub;
+let jsfDatabaseGithub;;
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -59,7 +60,7 @@ class Fighter {
   attack(target) {
     console.log(this.name + ' attacked ' + target.name); //logs attack
     //save old text
-    let oldtext = outputBox.innerHTML
+    oldtext = outputBox.innerHTML
 
     if (logging) {
       log =  '<br>' + oldtext
@@ -72,13 +73,13 @@ class Fighter {
     let dodge = Math.round(Math.random()) //Gets a random value to determine wether to dodge
 
     if (dodge) {
-      outputBox.innerHTML += '<br>' + target.name + ' dodged ' + this.name + '\'s attack and was only hit for <span class="damageColor">' + reducedDamage + ' damage</span>'; // outputs to the outputbox
+      outputBox.innerHTML = target.name + ' dodged ' + this.name + '\'s attack and was only hit for <span class="damageColor">' + reducedDamage + ' damage</span>' + log;; // outputs to the outputbox
       damage = reducedDamage // sets damage to reduced damage when dodgeing
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_dodge.png'; //sets the target to dodgeing graphics
       koCheck(target, damage); //runs ko check
     } else {
-      outputBox.innerHTML += '<br>' + this.name + ' attacked ' + target.name + ' for  <span class="damageColor">' + damage + ' damage! </span>' // outputs to the outputbox
+      outputBox.innerHTML = this.name + ' attacked ' + target.name + ' for  <span class="damageColor">' + damage + ' damage! </span>' + log; // outputs to the outputbox
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_attack.png'; //sets the attacker to attacking graphics
       document.getElementById(target.charaName).src = 'img/' + target.charaName + '_hit.png'; //sets the target to hit graphics
       koCheck(target, damage); //runs ko check
@@ -125,7 +126,7 @@ if (charged) {
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
     //save old text
-    let oldtext = outputBox.innerHTML
+    oldtext = outputBox.innerHTML
 
     if (logging) {
       log =  '<br>' + oldtext
@@ -141,7 +142,7 @@ if (charged) {
       let recovery = this.tek * 2;
       //heal player
       koCheck(this, -recovery);
-      outputBox.innerHTML += '<br>' + this.name + '<span class="recoverColor"> Recovered ' + recovery + '</span>'; //logs recovery to output box
+      outputBox.innerHTML = this.name + '<span class="recoverColor"> Recovered ' + recovery + '</span>' + log; //logs recovery to output box
       document.getElementById(this.charaName).src = 'img/' + this.charaName + '_spell.png'; //sets player casting the recovery spell to spell graphics
     } else {
       outputBox.innerHTML = 'Not enough SP!' + log; //If the sp is to low it logs to the output box with everything else
@@ -290,6 +291,8 @@ function showSettings() {
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
+  outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
+  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub +'">Visit jsfDatabaseGithub</a>'
 }
 
 //used to toggle logging
