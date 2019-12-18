@@ -87,10 +87,20 @@ class Fighter {
 
 charge(target) {
   console.log('Working Properly')
-  let damage = this.atk * 2
-  this.hp = this.hp - 10
-  this.atk = damage
-  outputBox.innerHTML += this.name + ' has started to charge!'
+  let charged = false
+  if (this.hp >= 50) {
+  outputBox.innerHTML += '<br>' + this.name + ' is too healthy to charge!'
+} else{
+  outputBox.innerHTML += '<br>' + this.name + ' has charged up! incrased by 10! Health has decrased by five!'
+  this.hp = this.hp - 5
+  this.atk = this.atk + 10
+  charged = true
+}
+if (charged) {
+  outputBox.innerHTML += this.name + ' has already charged!'
+  this.hp = this.hp
+  this.atk = this.atk
+}
 }
 
   //used for a single attack
@@ -110,8 +120,8 @@ charge(target) {
     this.charge(target);
     endTurn();
   }
-
   //used to recover
+
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
     //save old text
@@ -322,6 +332,16 @@ function randomQuote() { //assigned function random
 
   //outputs varible rQuote (the Random Quote) into the html under the tag output
     outputBox.innerHTML = rQuote //logs random quote as spalsh text
+}
+
+const Http = new XMLHttpRequest();
+const url='https://api.github.com/repos/KingAshtor/JSFighter-TeamB';
+Http.open('GET', url);
+Http.send();
+
+Http.onreadystatechange = (e) => {
+  let list = JSON.parse(Http.responseText);
+  console.log(list.html_url)
 }
 /*
 MHW = 'delicious'
