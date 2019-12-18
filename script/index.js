@@ -46,6 +46,7 @@ let sound; //declares a value used to toggle sound
 let jsfGithub;
 let jsfDatabaseGithub;
 
+
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
 
@@ -92,14 +93,23 @@ class Fighter {
     }
   }
 
-  charge(target) {
-    console.log('Working Properly')
-    let damage = this.atk * 2
-    this.hp = this.hp - 10
-    this.atk = damage
-    outputBox.innerHTML += this.name + ' has started to charge!'
-  }
-
+charge(target) {
+  console.log('Working Properly')
+  let charged = false
+  if (this.hp >= 50) {
+  outputBox.innerHTML += '<br>' + this.name + ' is too healthy to charge!'
+} else{
+  outputBox.innerHTML += '<br>' + this.name + ' has charged up! incrased by 10! Health has decrased by five!'
+  this.hp = this.hp - 5
+  this.atk = this.atk + 10
+  charged = true
+}
+if (charged) {
+  outputBox.innerHTML += this.name + ' has already charged!'
+  this.hp = this.hp
+  this.atk = this.atk
+}
+}
   //used for a single attack
   single(target) {
     this.attack(target);
@@ -117,8 +127,8 @@ class Fighter {
     this.charge(target);
     endTurn();
   }
-
   //used to recover
+
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
     //save old text
@@ -302,6 +312,7 @@ function showSettings() {
   controlsBox.innerHTML += '<button type="button" name="sound" onclick="soundToggle()">Sound</button>';
   //calls updateSettings
   updateSettings()
+
 }
 
 //used to toggle logging
@@ -350,8 +361,7 @@ function randomQuote() { //assigned function random
       'free range!?!?!? - Mykahl Luciano',
       'GitHub is dynamically screwing us over! -Ashton Sisson',
       'Sicky Nar-Nar - Harry Nelson',
-      '',
-      '',
+
     ];
 
   //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
@@ -362,15 +372,15 @@ function randomQuote() { //assigned function random
   outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
 
-let xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    let myObj = JSON.parse(this.responseText);
-    jsfGithub = myObj.name;
-  }
-};
-xmlhttp.open("GET", "JSFighter-TeamB", true);
-xmlhttp.send();
+const Http = new XMLHttpRequest();
+const url='https://api.github.com/repos/KingAshtor/JSFighter-TeamB';
+Http.open('GET', url);
+Http.send();
+
+Http.onreadystatechange = (e) => {
+  let list = JSON.parse(Http.responseText);
+  console.log(list.html_url)
+}
 /*
 MHW = 'delicious'
 MHWoutput > MHWinput
