@@ -324,8 +324,7 @@ function randomQuote() { //assigned function random
       'My whole life is a lie -Daniel Williams',
       'Im an airplaine! PRPRPRPRPRPPRRPPRPRPRPRPRPRPPRPRPRRRPPPP -Ashton Sisson',
       'I\'ve oversanitised! -Ashton Sisson',
-      'Harry can you play the SpongeBob thing? -Ashton Sisson',
-      'You\'ve been blinded by meglovania! -Ashton Sisson',
+      'Harry can you play the SpongeBob thing? -Ashton Sisson',      'You\'ve been blinded by meglovania! -Ashton Sisson',
       'Not now I\'m Goofy Goobering -Ashton Sisson No Your not allowed -Nathan Cunningham',
       'Get smacked -Harry Nelson',
       'free range!?!?!? - Mykahl Luciano',
@@ -353,16 +352,17 @@ Http.onreadystatechange = (e) => {
 
 function link2() {
 const Http = new XMLHttpRequest();
-const url='https://api.github.com/repos/andre2021537/JSFDB';
-Http.open('GET', url);
+const url2='http://192.168.24.231:3001/api/v0/github';
+Http.open('GET', url2);
 Http.send();
 
 Http.onreadystatechange = (e) => {
-  let list = JSON.parse(Http.responseText);
-  jsfDatabaseGithub = (list.html_url)
-  console.log(list.html_url)
+  let list2 = JSON.parse(Http.responseText);
+  jsfDatabaseGithub = (list2.html_url)
+  console.log(list2.html_url)
 }
 }
+
 
 /*
 MHW = 'delicious'
