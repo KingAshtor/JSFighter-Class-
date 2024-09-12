@@ -21,6 +21,9 @@ const P0CHARA = 'crashr';
 const P1NAME = 'Sam';
 const P1CHARA = 'saml';
 
+let playerTurn = false; //declares a value used for tracking player turn.
+let logging; //declares a value used to toggle logging
+
 //creates the players
 let Player0;
 let Player1;
@@ -32,20 +35,11 @@ let graphicsBox;
 let barsBox;
 let controlsBox;
 let outputBox;
-
 let sp;
 let log;
-let oldtext;
-let playerTurn = false; //declares a value used for tracking player turn.
-let logging; //declares a value used to toggle logging
-let graphics; //declares a value used to toggle graphics
-let sound; //declares a value used to toggle sound
-
-
-//used to link the urls we get from the JSON
 let jsfGithub;
 let jsfDatabaseGithub;
-
+let oldtext;
 
 //Creates a class called Fighter to generate fighters easily and using less code
 class Fighter {
@@ -70,13 +64,13 @@ class Fighter {
     oldtext = outputBox.innerHTML
 
     if (logging) {
-      log = '<br>' + oldtext
+      log =  '<br>' + oldtext
     } else {
       log = "";
     }
 
-    let damage = (Math.round(Math.random() + 1) * this.atk) //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
-    let reducedDamage = Math.round(damage / 6) //Creates reducedDamage which is used to deal less damage then normal for when they dodge
+    let damage = (Math.round(Math.random() + 1) * this.atk); //Does the attack with a random chance to be double. this is done by getting random number between one and zero, converts it to just one or zero and adds one to it making it randomly one or two. then it takes the one or two times the damage to deal random double damage
+    let reducedDamage = Math.round(damage / 6); //Creates reducedDamage which is used to deal less damage then normal for when they dodge
     let dodge = Math.round(Math.random()) //Gets a random value to determine wether to dodge
 
     if (dodge) {
@@ -95,21 +89,12 @@ class Fighter {
 
 charge(target) {
   console.log('Working Properly')
-  let charged = false
-  if (this.hp >= 50) {
-  outputBox.innerHTML += '<br>' + this.name + ' is too healthy to charge!'
-} else{
-  outputBox.innerHTML += '<br>' + this.name + ' has charged up! incrased by 10! Health has decrased by five!'
-  this.hp = this.hp - 5
-  this.atk = this.atk + 10
-  charged = true
+  let damage = this.atk * 2
+  this.hp = this.hp - 10
+  this.atk = damage
+  outputBox.innerHTML += this.name + ' has started to charge!'
 }
-if (charged) {
-  outputBox.innerHTML += this.name + ' has already charged!'
-  this.hp = this.hp
-  this.atk = this.atk
-}
-}
+
   //used for a single attack
   single(target) {
     this.attack(target);
@@ -120,22 +105,28 @@ if (charged) {
   double(target) {
     this.attack(target);
     this.attack(target);
+    // Check to see if this player has enough SP to use the ability
+    if (this.sp >= 5) {
+        // Consume SP for using the ability
+        this.sp = this.sp - 5;
+        // Log action details to 'outputBox'
     endTurn();
   }
+}
 
   special(target) {
     this.charge(target);
     endTurn();
   }
-  //used to recover
 
+  //used to recover
   recover() {
     console.log('Recovered!'); //Logs the recovery in console
     //save old text
     oldtext = outputBox.innerHTML
 
     if (logging) {
-      log = '<br>' + oldtext
+      log =  '<br>' + oldtext
     } else {
       log = "";
     }
@@ -173,13 +164,11 @@ function startup() {
   controlsBox = document.getElementById('controlsBox');
   outputBox = document.getElementById('outputBox');
 
-  showMenu()
-  link1()
-  link2()
+  showMenu();
+  link1();
+  link2();
 
   logging = false
-  sound = 'off'
-  graphics = 'classic'
 }
 
 function gameStart() {
@@ -266,9 +255,13 @@ function endTurn() {
     hideControls(); //calls hideControls to end the game
     updateBars(); //calls updateBars in order to update the bars
   } else {
-    showControls() //shows controls for next players turn
+    showControls(); //shows controls for next players turn
     updateBars(); //calls updateBars in order to update the bars
   }
+  if (Player0.sp < 10)
+      Player0.sp += !playerTurn
+  if (Player1.sp < 10)
+      Player1.sp += playerTurn
 }
 
 //creates function for hiding controls to end the game by showing a reset button to restart the game
@@ -295,45 +288,21 @@ function showCharacterSelect() {
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
 }
 
-
-function updateSettings() {
-  outputBox.innerHTML = '<div class="settingMenu">Logging ' + logging + ' | Graphics ' + graphics + ' | Sound ' + sound + ' |</div>'
-  outputBox.innerHTML += '<br><a href="' + jsfGithub + '">Visit jsfGithub</a>'
-  outputBox.innerHTML += '<br><a href="' + jsfDatabaseGithub + '">Visit jsfDatabaseGithub</a>'
-}
-
 //showSettings is used to open a settings menu to change aspects of the game
 function showSettings() {
   //adds a button to return to main menu
   controlsBox.innerHTML = '<button type="button" name="menu" onclick="showMenu()">Main Menu</button>';
   //adds a button to toggle logging
   controlsBox.innerHTML += '<button type="button" name="logging" onclick="loggingToggle()">Logging</button>';
-  //adds a button to change graphics
-  controlsBox.innerHTML += '<button type="button" name="graphics" onclick="graphicsToggle()">Graphics</button>';
-  //adds a button to toggle logging
-  controlsBox.innerHTML += '<button type="button" name="sound" onclick="soundToggle()">Sound</button>';
-  //calls updateSettings
-  updateSettings()
-
+  outputBox.innerHTML = '<a href="' + jsfGithub + '">Visit jsfGithub</a>'
+  outputBox.innerHTML += '<br><a href="'+jsfDatabaseGithub+'">Visit jsfDatabaseGithub</a>';
 }
 
 //used to toggle logging
 function loggingToggle() {
   logging = !logging; //inverts logging
-  updateSettings(); //updates settings
+  outputBox.innerHTML = logging; //logs true or false to console based on logging
 }
-//used to toggle graphics
-function graphicsToggle() {
-  graphics = 'WIP'
-  updateSettings(); //updates settings
-}
-//used to toggle sound
-function soundToggle() {
-  sound = 'WIP'
-  updateSettings(); //updates settings
-}
-
-
 function randomQuote() { //assigned function random
 
   let rQuoteStoreage = //Used to assign array that stores random quotes
@@ -362,8 +331,9 @@ function randomQuote() { //assigned function random
       'Get smacked -Harry Nelson',
       'free range!?!?!? - Mykahl Luciano',
       'GitHub is dynamically screwing us over! -Ashton Sisson',
-      'Sicky Nar-Nar - Harry Nelson',
-
+      '',
+      '',
+      '',
     ];
 
   //Picks random quote. we generate a random whole number by combining math.floor, and math.random, and makes sure it is under the max array leangth
@@ -371,8 +341,9 @@ function randomQuote() { //assigned function random
     rQuoteStoreage[Math.floor(Math.random() * rQuoteStoreage.length)];
 
   //outputs varible rQuote (the Random Quote) into the html under the tag output
-  outputBox.innerHTML = rQuote //logs random quote as spalsh text
+    outputBox.innerHTML = rQuote //logs random quote as spalsh text
 }
+
 function link1() {
 const Http = new XMLHttpRequest();
 const url='https://api.github.com/repos/KingAshtor/JSFighter-TeamB';
@@ -398,6 +369,7 @@ Http.onreadystatechange = (e) => {
   console.log(list.html_url)
 }
 }
+
 
 /*
 MHW = 'delicious'
